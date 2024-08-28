@@ -10,7 +10,9 @@ namespace AcademyApplication.Core.Entities
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public DateTime dateTime { get; set; }
+        public string FileName { get; set; }
+        public string Email { get; set; }
+        public DateTime BirtDate { get; set; }
         public int GroupId { get; set; }
         public Group Group { get; set; }
     }
