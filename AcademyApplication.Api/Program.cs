@@ -5,6 +5,7 @@
 using AcademyApplication.Application.Dtos.GroupDto;
 using AcademyApplication.Application.Implementations;
 using AcademyApplication.Application.Interfaces;
+using AcademyApplication.Application.Profiles;
 using AcademyApplication.DataAccess.Data;
 using FluentValidation;
 using FluentValidation.AspNetCore;
@@ -30,7 +31,8 @@ builder.Services.AddDbContext<AcademyAppDbContext>(options =>
     options.UseSqlServer(config.GetConnectionString("AppConnectionString"),
                          sqlOptions => sqlOptions.MigrationsAssembly("AcademyApplication.DataAccess"));
 });
-builder.Services.AddScoped<IGroupService, GroupService>(); 
+builder.Services.AddScoped<IGroupService, GroupService>();
+builder.Services.AddAutoMapper(typeof(MapperProfile));
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

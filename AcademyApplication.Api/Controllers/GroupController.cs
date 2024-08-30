@@ -1,6 +1,7 @@
 ﻿using AcademyApplication.Application.Dtos.GroupDto;
 using AcademyApplication.Application.Exceptions;
 using AcademyApplication.Application.Interfaces;
+using AcademyApplication.Application.Profiles;
 using AcademyApplication.Core.Entities;
 using AcademyApplication.DataAccess.Data;
 using Microsoft.AspNetCore.Http;
@@ -13,7 +14,6 @@ namespace AcademyApplication.Api.Controllers
     public class GroupController : ControllerBase
     {
         private readonly IGroupService _groupService;
-
         public GroupController(IGroupService groupService)
         {
             _groupService = groupService;

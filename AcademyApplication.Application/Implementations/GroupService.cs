@@ -1,8 +1,10 @@
 ﻿using AcademyApplication.Application.Dtos.GroupDto;
 using AcademyApplication.Application.Exceptions;
 using AcademyApplication.Application.Interfaces;
+using AcademyApplication.Application.Profiles;
 using AcademyApplication.Core.Entities;
 using AcademyApplication.DataAccess.Data;
+using AutoMapper;
 using Microsoft.AspNetCore.Http.HttpResults;
 using System;
 using System.Collections.Generic;
@@ -15,10 +17,12 @@ namespace AcademyApplication.Application.Implementations
     public class GroupService:IGroupService
     {
         private readonly AcademyAppDbContext _context;
+        private readonly IMapper autoMapper;
 
-        public GroupService(AcademyAppDbContext context)
+        public GroupService(AcademyAppDbContext context, IMapper autoMapper)
         {
             _context = context;
+            this.autoMapper = autoMapper;
         }
         public int Create(GroupCreateDto groupCreateDto)
         {
@@ -26,9 +30,7 @@ namespace AcademyApplication.Application.Implementations
                 throw new DublicateException("The group with the same name can not be created");
             }
 
-            Group group = new Group();
-            group.Name = groupCreateDto.Name;
-            group.Limit = groupCreateDto.Limit;
+           var group= autoMapper.Map<Group>(groupCreateDto);
             _context.Groups.Add(group);
             _context.SaveChanges();
             return group.Id;
