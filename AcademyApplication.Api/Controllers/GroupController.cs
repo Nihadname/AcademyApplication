@@ -1,4 +1,5 @@
 ﻿using AcademyApplication.Application.Dtos.GroupDto;
+using AcademyApplication.Application.Exceptions;
 using AcademyApplication.Application.Interfaces;
 using AcademyApplication.Core.Entities;
 using AcademyApplication.DataAccess.Data;
@@ -27,8 +28,17 @@ namespace AcademyApplication.Api.Controllers
 
         public IActionResult Create(GroupCreateDto groupCreateDto )
         {
-           
-            return Ok(_groupService.Create(groupCreateDto));
+            try
+            {
+                return Ok(_groupService.Create(groupCreateDto));
+            }catch(DublicateException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception)
+            {
+                return BadRequest(" xeta bas verib");
+            }
         }
     }
 }

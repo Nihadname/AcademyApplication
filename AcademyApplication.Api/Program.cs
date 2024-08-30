@@ -3,6 +3,7 @@
 
 
 using AcademyApplication.Application.Dtos.GroupDto;
+using AcademyApplication.Application.Implementations;
 using AcademyApplication.Application.Interfaces;
 using AcademyApplication.DataAccess.Data;
 using FluentValidation;
@@ -29,7 +30,7 @@ builder.Services.AddDbContext<AcademyAppDbContext>(options =>
     options.UseSqlServer(config.GetConnectionString("AppConnectionString"),
                          sqlOptions => sqlOptions.MigrationsAssembly("AcademyApplication.DataAccess"));
 });
-builder.Services.AddScoped<IGroupService, IGroupService>();
+builder.Services.AddScoped<IGroupService, GroupService>(); 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
