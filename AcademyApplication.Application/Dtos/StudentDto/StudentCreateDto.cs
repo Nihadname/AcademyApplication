@@ -23,28 +23,32 @@ namespace AcademyApplication.Application.Dtos.StudentDto
             RuleFor(s => s.Name).NotEmpty().MaximumLength(255).MinimumLength(5);
             RuleFor(s => s.Email).EmailAddress()
             .NotEmpty()
-            .MaximumLength(100).MaximumLength(5);
+            .MaximumLength(100).MinimumLength(5);
             RuleFor(s => s.BirtDate.Date)
                 .LessThanOrEqualTo(DateTime.Now.AddYears(-15));
             RuleFor(s => s).Custom((s, c) =>
             {
-                if(s.Name!=null && char.IsUpper(s.Name[0])){
+                if(s.Name!=null && !char.IsUpper(s.Name[0])){
                     c.AddFailure(nameof(s.Name),"Name cant start with lowerCase");
                 }
             });
             RuleFor(s => s).Custom((s, c) =>
             {
-                if (!(s.FormFile != null && s.FormFile.ContentType.Contains("image/")))
+                if (s.FormFile == null)
                 {
-                    c.AddFailure("FormFile", "only image is accepted");
+                    c.AddFailure("FormFile", "File is required.");
                 }
-                if (!(s.FormFile != null && s.FormFile.Length / 10124 > 6000))
+                else if (s.FormFile.Length > 10 * 1024 * 1024) 
                 {
-                    c.AddFailure("FormFile", "data stroage more than expected");
+                    c.AddFailure("FormFile", "File size exceeds the allowed limit of 10 MB.");
+                }
+                else if (!s.FormFile.ContentType.Contains("image/"))
+                {
+                    c.AddFailure("FormFile", "Only image files are accepted.");
                 }
             });
-            
-            
-            }
+
+
+        }
     }
 }

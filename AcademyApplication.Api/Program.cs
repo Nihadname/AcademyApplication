@@ -32,8 +32,12 @@ builder.Services.AddDbContext<AcademyAppDbContext>(options =>
                          sqlOptions => sqlOptions.MigrationsAssembly("AcademyApplication.DataAccess"));
 });
 builder.Services.AddScoped<IGroupService, GroupService>();
-builder.Services.AddAutoMapper(typeof(MapperProfile));
-var app = builder.Build();
+builder.Services.AddScoped<IStudentService, StudentService>();
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddAutoMapper(opt =>
+{
+    opt.AddProfile(new MapperProfile(new HttpContextAccessor()));
+}); var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -41,6 +45,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+app.UseStaticFiles();
 
 app.UseHttpsRedirection();
 

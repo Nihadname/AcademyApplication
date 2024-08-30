@@ -19,4 +19,8 @@
     <ProjectReference Include="..\AcademyApplication.Application\AcademyApplication.Application.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\uploads\images\" />
+  </ItemGroup>
+
 </Project>
