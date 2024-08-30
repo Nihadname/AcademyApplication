@@ -1,4 +1,5 @@
 ﻿using AcademyApplication.Application.Dtos.GroupDto;
+using AcademyApplication.Application.Interfaces;
 using AcademyApplication.Core.Entities;
 using AcademyApplication.DataAccess.Data;
 using Microsoft.AspNetCore.Http;
@@ -10,28 +11,24 @@ namespace AcademyApplication.Api.Controllers
     [ApiController]
     public class GroupController : ControllerBase
     {
-        private readonly AcademyAppDbContext _context;
+        private readonly IGroupService _groupService;
 
-        public GroupController(AcademyAppDbContext context)
+        public GroupController(IGroupService groupService)
         {
-            _context = context;
+            _groupService = groupService;
         }
 
         [HttpGet]
         public IActionResult Get()
         {
-            return Ok(_context.Groups.ToList());
+            return Ok(_groupService.GetGroups());
         }
         [HttpPost]
 
         public IActionResult Create(GroupCreateDto groupCreateDto )
         {
-            Group group = new Group();
-            group.Name = groupCreateDto.Name;
-            group.Limit = groupCreateDto.Limit;
-            _context.Groups.Add(group);
-            _context.SaveChanges();
-            return Ok();
+           
+            return Ok(_groupService.Create(groupCreateDto));
         }
     }
 }
