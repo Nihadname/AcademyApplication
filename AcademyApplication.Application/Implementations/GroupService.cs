@@ -27,7 +27,7 @@ namespace AcademyApplication.Application.Implementations
         public int Create(GroupCreateDto groupCreateDto)
         {
             if (_context.Groups.Any(s => s.Name.ToLower() == groupCreateDto.Name.ToLower())){
-                throw new DublicateException("The group with the same name can not be created");
+                throw new CustomException(400,"Name","The group with the same name can not be created");
             }
 
            var group= autoMapper.Map<Group>(groupCreateDto);

@@ -18,15 +18,9 @@ namespace AcademyApplication.Api.Controllers
         [HttpPost]
         public IActionResult Create(StudentCreateDto studentCreateDto)
         {
-            try
-            {
+           
+          
                 return Ok(_studentService.Create(studentCreateDto));
-            }
-            catch (Exception ex)
-            {
-
-                return BadRequest(ex.Message);
-            }
         }
     }
 }

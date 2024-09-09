@@ -26,11 +26,11 @@ namespace AcademyApplication.Application.Implementations
         public int Create(StudentCreateDto studentCreateDto)
         {
             var group= _context.Groups.Include(s=>s.Students).FirstOrDefault(s=>s.Id==studentCreateDto.GroupId);
-            if(group is null) throw new NotFoundException("There is no group like that");
+            if(group is null) throw new CustomException(404,"Id","There is no group like that");
 
             if (group.Students.Count() >= group.Limit)
             {
-                throw new LimitException("group cant have more than these students");
+                throw new CustomException(400, "Limit", "group cant have more than these students");
             }
             var student = autoMapper.Map<Student>(studentCreateDto);   
             _context.Students.Add(student);

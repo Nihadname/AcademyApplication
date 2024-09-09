@@ -28,17 +28,9 @@ namespace AcademyApplication.Api.Controllers
 
         public IActionResult Create(GroupCreateDto groupCreateDto )
         {
-            try
-            {
+           
                 return Ok(_groupService.Create(groupCreateDto));
-            }catch(DublicateException ex)
-            {
-                return BadRequest(ex.Message);
-            }
-            catch (Exception)
-            {
-                return BadRequest(" xeta bas verib");
-            }
+           
         }
     }
 }

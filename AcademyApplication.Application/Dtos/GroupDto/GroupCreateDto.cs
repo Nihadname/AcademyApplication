@@ -18,7 +18,7 @@ namespace AcademyApplication.Application.Dtos.GroupDto
         {
             RuleFor(s => s.Name).NotEmpty().MaximumLength(255).MinimumLength(4);
             RuleFor(s => s.Limit).NotEmpty();
-            RuleFor(s => s.Limit).NotEmpty().WithMessage("not empty").GreaterThanOrEqualTo(5).LessThanOrEqualTo(18);
+            RuleFor(s => s.Limit).NotEmpty().WithMessage("not empty").InclusiveBetween(5, 10);
         }
     }
 
