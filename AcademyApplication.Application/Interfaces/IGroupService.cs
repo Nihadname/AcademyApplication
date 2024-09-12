@@ -10,7 +10,7 @@ namespace AcademyApplication.Application.Interfaces
 {
     public interface IGroupService
     {
-        int Create(GroupCreateDto groupCreateDto);
-        List<Group> GetGroups();
+        Task<int> Create(GroupCreateDto groupCreateDto);
+        Task<List<Group>> GetGroups();
     }
 }

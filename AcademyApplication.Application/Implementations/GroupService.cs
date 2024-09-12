@@ -4,6 +4,7 @@ using AcademyApplication.Application.Interfaces;
 using AcademyApplication.Application.Profiles;
 using AcademyApplication.Core.Entities;
 using AcademyApplication.DataAccess.Data;
+using AcademyApplication.DataAccess.Data.Implementations;
 using AutoMapper;
 using Microsoft.AspNetCore.Http.HttpResults;
 using System;
@@ -16,29 +17,29 @@ namespace AcademyApplication.Application.Implementations
 {
     public class GroupService:IGroupService
     {
-        private readonly AcademyAppDbContext _context;
+        private readonly IUnitOfWork _IUnitOfWork;
         private readonly IMapper autoMapper;
 
-        public GroupService(AcademyAppDbContext context, IMapper autoMapper)
+        public GroupService(IUnitOfWork IUnitOfWork, IMapper autoMapper)
         {
-            _context = context;
+            IUnitOfWork = _IUnitOfWork;
             this.autoMapper = autoMapper;
         }
-        public int Create(GroupCreateDto groupCreateDto)
+        public async Task<int> Create(GroupCreateDto groupCreateDto)
         {
-            if (_context.Groups.Any(s => s.Name.ToLower() == groupCreateDto.Name.ToLower())){
+            if (await _IUnitOfWork.GroupRepository.isExists(s => s.Name.ToLower() == groupCreateDto.Name.ToLower())){
                 throw new CustomException(400,"Name","The group with the same name can not be created");
             }
 
            var group= autoMapper.Map<Group>(groupCreateDto);
-            _context.Groups.Add(group);
-            _context.SaveChanges();
+            await _IUnitOfWork.GroupRepository.Create(group);
+            _IUnitOfWork.Commit();
             return group.Id;
         }
 
-        public List<Group> GetGroups()
+        public async Task<List<Group>> GetGroups()
         {
-            return _context.Groups.ToList();
+            return await _IUnitOfWork.GroupRepository.GetAll();
         }
     }
 }
