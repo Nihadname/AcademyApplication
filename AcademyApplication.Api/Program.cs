@@ -9,6 +9,7 @@ using AcademyApplication.Application.Implementations;
 using AcademyApplication.Application.Interfaces;
 using AcademyApplication.Application.Profiles;
 using AcademyApplication.DataAccess.Data;
+using AcademyApplication.DataAccess.Data.Implementations;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using MicroElements.Swashbuckle.FluentValidation.AspNetCore;
@@ -57,6 +58,7 @@ builder.Services.AddDbContext<AcademyAppDbContext>(options =>
 });
 builder.Services.AddScoped<IGroupService, GroupService>();
 builder.Services.AddScoped<IStudentService, StudentService>();
+builder.Services.AddScoped<IGroupRepository, GroupRepository>();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddAutoMapper(opt =>
 {
