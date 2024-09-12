@@ -20,13 +20,13 @@ namespace AcademyApplication.Api.Controllers
         }
 
         [HttpGet]
-        public IActionResult Get()
+        public async Task<IActionResult> Get()
         {
-            return Ok(_groupService.GetGroups());
+            return Ok( await _groupService.GetGroups());
         }
         [HttpPost]
 
-        public IActionResult Create(GroupCreateDto groupCreateDto )
+        public  IActionResult Create(GroupCreateDto groupCreateDto )
         {
            
                 return Ok(_groupService.Create(groupCreateDto));

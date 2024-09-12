@@ -20,10 +20,11 @@ namespace AcademyApplication.Application.Implementations
         private readonly IUnitOfWork _IUnitOfWork;
         private readonly IMapper autoMapper;
 
-        public GroupService(IUnitOfWork IUnitOfWork, IMapper autoMapper)
+        public GroupService(IUnitOfWork IUnitOfWork, IMapper autoMapper, IUnitOfWork iUnitOfWork)
         {
-            IUnitOfWork = _IUnitOfWork;
+
             this.autoMapper = autoMapper;
+            _IUnitOfWork = iUnitOfWork;
         }
         public async Task<int> Create(GroupCreateDto groupCreateDto)
         {

@@ -1,10 +1,11 @@
 ﻿using AcademyApplication.Core.Entities;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
 namespace AcademyApplication.DataAccess.Data
 {
-    public class AcademyAppDbContext : DbContext
+    public class AcademyAppDbContext : IdentityDbContext<AppUser>
     {
         public AcademyAppDbContext(DbContextOptions options) : base(options)
         {
